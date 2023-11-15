@@ -1,2 +1,5 @@
-<input type="file" (change)="onInputChanged($event)">
+<div style="display: flex; justify-content: center; margin-top: 50px;">
+    <input type="file" (change)="onInputChanged($event)">
+    <button *ngIf="base64" (click)="downloadFile()">Download</button>
+</div>
 <p style="word-wrap: break-word;">{{ base64 }}</p>

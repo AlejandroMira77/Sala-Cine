@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   
-  title = 'sala-cine';
+  title = 'Base64';
   base64: any;
 
   onInputChanged(event: any) {
@@ -17,5 +17,25 @@ export class AppComponent {
       this.base64 = fileReader.result
     }
     fileReader.readAsDataURL(file);
+  }
+
+  downloadFile() {
+    this.base64 = this.base64.replace('data:application/pdf;base64,', '');
+    const byteArray = new Uint8Array(
+      atob(this.base64)
+      .split('')
+      .map(char => char.charCodeAt(0))
+    );
+
+    const file = new Blob([byteArray], {type: 'application/pdf'});
+    const fileUrl = URL.createObjectURL(file);
+    let filename = 'download_pdf_prueba';
+    let link = document.createElement('a');
+    link.download = filename;
+    link.target = '_blank';
+    link.href = fileUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
